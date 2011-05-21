@@ -1,4 +1,4 @@
-(ns seo-analyzer.app_servlet
+(ns seo-analyzer.app-servlet
   (:gen-class :extends javax.servlet.http.HttpServlet)
   (:use seo-analyzer.core)
   (:use [appengine-magic.servlet :only [make-servlet-service-method]]))

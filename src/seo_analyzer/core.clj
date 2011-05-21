@@ -1,8 +1,7 @@
 (ns seo-analyzer.core
   (:use compojure.core)
   (:require [appengine-magic.core :as ae]
-            [compojure.route :as route]
-            [compojure.handler :as handler]))
+            [compojure.route :as route]))
 
 
 (defroutes main-routes
@@ -10,6 +9,6 @@
   (route/not-found "Page not found"))
 
 (def app-handler
-  (handler/site main-routes))
+  main-routes)
 
 (ae/def-appengine-app seo-analyzer-app #'app-handler)

@@ -2,4 +2,5 @@
   :description "The seo-analyzer grades a page's seo characteristics."
   :dependencies [[org.clojure/clojure "1.2.1"]
                  [compojure "0.6.3"]]
-  :dev-dependencies [[appengine-magic "0.4.1"]])
+  :dev-dependencies [[appengine-magic "0.4.1"]]
+  :aot [seo-analyzer.app-servlet])
