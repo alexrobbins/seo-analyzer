@@ -3,4 +3,5 @@ pom.xml
 /lib/
 /classes/
 .lein-deps-sum
-/war/
+/war/WEB-INF/lib/
+/war/WEB-INF/classes/
