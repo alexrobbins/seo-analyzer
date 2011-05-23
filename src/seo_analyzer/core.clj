@@ -2,11 +2,15 @@
   (:use [compojure.core]
         [net.cgrand.enlive-html])
   (:require [appengine-magic.core :as ae]
-            [compojure.route :as route]))
+            [compojure.route :as route]
+            [form-dot-clj.core :as form]
+            [seo-analyzer.forms :only [show-analyze-form]]))
 
 (deftemplate home (ae/open-resource-stream "home.html") [title]
              [:title] (content title)
-             [:h1] (content title))
+             [:h1] (content title)
+             [:#content] (content
+                           (show-analyze-form nil nil)))
 
 (defn homepage
   [request]
