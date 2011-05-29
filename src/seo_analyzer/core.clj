@@ -5,9 +5,8 @@
         [form-dot-clj.html-controls]
         [ring.middleware params
                          keyword-params 
-                         nested-params 
-                         cookies
-                         session])
+                         nested-params]
+        [seo-analyzer.analysis :only (analyze-page)])
   (:require [appengine-magic.core :as ae]
             [compojure.route :as route]))
 
@@ -26,10 +25,31 @@
                        (show-controls analyze-form params errors)
                        (default-submit "Analyze")))
 
-(deftemplate results-template (ae/open-resource-stream "results.html") [])
+(defsnippet result-row (ae/open-resource-stream "results.html")
+            [[:tr (nth-of-type 2)]]
+            [[{title :title rule :doc} status]]
 
-(defn results [params]
-  (results-template))
+            [:tr] (set-attr :class (if status "good" "bad"))
+
+            [[:td (nth-of-type 1)]] (content title)
+            [[:td (nth-of-type 2)]] (content rule)
+            [[:td (nth-of-type 3)]] (content (if status
+                                               "OK"
+                                               "Bad")))
+
+(deftemplate results-template (ae/open-resource-stream "results.html")
+             [keyword-phrase url results]
+             [:p] (content (str "Analyzed " url " for \"" keyword-phrase "\"."))
+             [[:tr (nth-of-type 2)]] (substitute
+                                       (map result-row results))
+             [:#reanalyze [:input (attr= :name "Keyword-Phrase")]]
+                (set-attr :value keyword-phrase)
+             [:#reanalyze [:input (attr= :name "Url")]]
+                (set-attr :value url))
+
+(defn results [{keyword-phrase :Keyword-Phrase url :Url}]
+  (let [analysis-results (analyze-page keyword-phrase url)]
+    (results-template keyword-phrase url analysis-results)))
 
 ;; Setup the routes
 (defroutes main-routes

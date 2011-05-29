@@ -1,9 +1,27 @@
 <html>
     <head>
-        <title>Results</title>
+        <title>Analysis Results</title>
+        <link media="all" rel="stylesheet" type="text/css" href="/static/style.css" />
     </head>
     <body>
-        <h1>Results</h1>
-        <div id="content"></div>
+        <h1>Analysis Results</h1>
+        <p>Analyzed {page} for {keyword-phrase}</p>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Rule</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>Title</td>
+                <td>Rule</td>
+                <td>Status</td>
+            </tr>
+        </table>
+        <form id="reanalyze" action="." method="post">
+            <input type="hidden" name="Keyword-Phrase" />
+            <input type="hidden" name="Url" />
+            <input type="submit" value="Re-analyze" />
+        </form>
     </body>
 </html>
